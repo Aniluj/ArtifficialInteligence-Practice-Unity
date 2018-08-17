@@ -10,7 +10,9 @@ public class FSM
 
     public FSM(int statesCount, int eventsCount)
     {
-        for (int i = 0; i < eventsCount; i++)
+        fsm = new int[statesCount, eventsCount];
+
+        for (int i = 0; i < statesCount; i++)
         {
             for (int j = 0; j < eventsCount; j++)
             {
@@ -23,6 +25,7 @@ public class FSM
     public void SetRelation(int srcState, int eventId, int destinationState)
     {
         fsm[srcState, eventId] = destinationState;
+        state = srcState;
     }
 
     public int GetState()

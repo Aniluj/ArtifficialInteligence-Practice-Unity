@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class FSMTest : MonoBehaviour {
 
-    FSM fineStateMachine = new FSM(4, 1);
-    const int moveRight = 0;
-    const int moveUp = 1;
-    const int moveLeft = 2;
-    const int moveDown = 3;
-    Transform playerTransfor;
-    int changeDirectionMovement = 1;
+    private FSM finiteStatetMachine = new FSM(4, 1);
+    private const int moveRight = 0;
+    private const int moveUp = 1;
+    private const int moveLeft = 2;
+    private const int moveDown = 3;
+    private int movement = 0;
+    private int moving = 1;
+    private int state = 0;
+    public float velocity = 0;
 
     void Start () {
         
@@ -20,17 +22,28 @@ public class FSMTest : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            changeDirectionMovement = 1;
-            fineStateMachine.SetEvent(changeDirectionMovement);
+            movement = 0;
+            state += 1;
+            if (state == 4)
+            {
+                state = 0;
+            }
+            finiteStatetMachine.SetRelation(state, movement, moving);
         }
 
-        switch (fineStateMachine.GetState())
+        switch (finiteStatetMachine.GetState())
         {
             case moveRight :
-                transform.Translate(Vector3 right(1, 0, 0));
+                transform.Translate(Vector3.right*Time.deltaTime*velocity);
                 break;
             case moveLeft:
-                Debug.Log("fsafsa");
+                transform.Translate(Vector3.left * Time.deltaTime * velocity);
+                break;
+            case moveUp:
+                transform.Translate(Vector3.up * Time.deltaTime * velocity);
+                break;
+            case moveDown:
+                transform.Translate(Vector3.down * Time.deltaTime * velocity);
                 break;
         }
 	}
