@@ -9,9 +9,8 @@ public class FSMTest : MonoBehaviour {
     private const int moveUp = 1;
     private const int moveLeft = 2;
     private const int moveDown = 3;
-    private int movement = 0;
-    private int moving = 1;
-    private int state = 0;
+    private int changeDirection = 0;
+    private int movementState = 0;
     public float velocity = 0;
 
     void Start () {
@@ -22,19 +21,20 @@ public class FSMTest : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            movement = 0;
-            state += 1;
-            if (state == 4)
+            changeDirection = 0;
+            movementState += 1;
+            if (movementState == 4)
             {
-                state = 0;
+                movementState = 0;
             }
-            finiteStatetMachine.SetRelation(state, movement, moving);
+            finiteStatetMachine.SetEvent(changeDirection);
+            finiteStatetMachine.SetRelation(finiteStatetMachine.GetState(), changeDirection, movementState);
         }
 
         switch (finiteStatetMachine.GetState())
         {
             case moveRight :
-                transform.Translate(Vector3.right*Time.deltaTime*velocity);
+                transform.Translate(Vector3.right * Time.deltaTime * velocity);
                 break;
             case moveLeft:
                 transform.Translate(Vector3.left * Time.deltaTime * velocity);

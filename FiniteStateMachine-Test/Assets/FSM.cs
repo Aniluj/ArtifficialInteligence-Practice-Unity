@@ -25,7 +25,6 @@ public class FSM
     public void SetRelation(int srcState, int eventId, int destinationState)
     {
         fsm[srcState, eventId] = destinationState;
-        state = srcState;
     }
 
     public int GetState()
