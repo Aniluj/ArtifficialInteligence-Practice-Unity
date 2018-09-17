@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PathFinderBFS : MonoBehaviour {
 
-    Node goalNode;
-    Node originNode;
-    Node currentNode;
+    public Node goalNode;
+    public Node originNode;
+    private Node currentNode;
     List<Vector3> pathToGoal = new List<Vector3>();
     List<Node> openedNodes = new List<Node>();
     List<Node> closedNodes = new List<Node>();
@@ -19,22 +20,43 @@ public class PathFinderBFS : MonoBehaviour {
     void Start ()
     {
         currentNode = originNode;
+        BFS();
 	}
 	
 
 	void Update ()
     {
-		
+        
 	}
 
     void BFS()
     {
-        while(openedNodes.Count != 0)
+        if (currentNode == originNode)
         {
-            currentNode.isClosed = true;
             pathToGoal.Add(currentNode.transform.position);
             closedNodes.Add(currentNode);
-            for(int i = 0; i < currentNode.adjacents.Count; i++)
+        }
+        for (int i = 0; i < currentNode.adjacents.Count; i++)
+        {
+            if (currentNode.adjacents[i].isOpen == false && currentNode.adjacents[i].isClosed == false)
+            {
+                currentNode.adjacents[i].isOpen = true;
+                openedNodes.Add(currentNode.adjacents[i]);
+            }
+        }
+        while (openedNodes.Count != 0)
+        {
+            currentNode.isClosed = true;
+            if(currentNode.parent != null)
+            {
+                Debug.Log(currentNode.parent.transform.position);
+                pathToGoal.Add(currentNode.parent.transform.position);
+            }
+            if(currentNode == goalNode)
+            {
+                break;
+            }
+            for (int i = 0; i < currentNode.adjacents.Count; i++)
             {
                 if(currentNode.adjacents[i].isOpen == false && currentNode.adjacents[i].isClosed == false)
                 {
