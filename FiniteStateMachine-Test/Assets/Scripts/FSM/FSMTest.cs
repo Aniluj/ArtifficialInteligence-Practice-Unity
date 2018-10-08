@@ -22,6 +22,11 @@ public class FSMTest : MonoBehaviour
 
     void Start ()
     {
+        finiteStatetMachine.SetRelation(goToTheMine, positionReached, collectGold);
+        finiteStatetMachine.SetRelation(collectGold, goldCollected, goToTheHouse);
+        finiteStatetMachine.SetRelation(goToTheHouse, positionReached, leaveGold);
+        finiteStatetMachine.SetRelation(leaveGold, goldLeft, goToTheMine);
+
         direction.Set(mineTransform.position.x - transform.position.x, 0, mineTransform.position.z - transform.position.z);
     }
 	
@@ -33,7 +38,6 @@ public class FSMTest : MonoBehaviour
                 transform.Translate((direction/direction.magnitude) * Time.deltaTime * velocity);
                 if ((this.transform.position.x >= mineTransform.position.x))
                 {
-                    finiteStatetMachine.SetRelation(finiteStatetMachine.GetState(), positionReached, collectGold);
                     finiteStatetMachine.SetEvent(positionReached);
                 }
                 break;
@@ -42,7 +46,6 @@ public class FSMTest : MonoBehaviour
                 {
                     mineTransform.Find("Gold").transform.SetParent(transform, true);
                     transform.Find("Gold").transform.localPosition = goldCarryingPoint.localPosition;
-                    finiteStatetMachine.SetRelation(collectGold, goldCollected, goToTheHouse);
                     finiteStatetMachine.SetEvent(goldCollected);
                     direction.Set(houseTransform.position.x - transform.position.x, 0, houseTransform.position.z - transform.position.z);
                 }
@@ -56,14 +59,11 @@ public class FSMTest : MonoBehaviour
                 transform.Translate((direction / direction.magnitude) * Time.deltaTime * velocity);
                 if (transform.position.x <= houseTransform.position.x)
                 {
-
-                    finiteStatetMachine.SetRelation(goToTheHouse, positionReached, leaveGold);
                     finiteStatetMachine.SetEvent(positionReached);
                 }
                 break;
             case leaveGold:
                 transform.Find("Gold").transform.SetParent(houseTransform);
-                finiteStatetMachine.SetRelation(leaveGold, goldLeft, goToTheMine);
                 finiteStatetMachine.SetEvent(goldLeft);
                 direction.Set(mineTransform.position.x - transform.position.x, 0, mineTransform.position.z - transform.position.z);
                 break;
