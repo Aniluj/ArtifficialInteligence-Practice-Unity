@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/BreadthFirstSearchScene.unity
+- path: Assets/Scenes/PathFinding.unity
   isLoaded: 1
   isActive: 1
