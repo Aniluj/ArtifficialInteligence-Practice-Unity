@@ -193,7 +193,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c3bec0a90115b3f49abda9060bfe14d5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -562,9 +562,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   adjacents:
+  - {fileID: 1740042325}
   - {fileID: 1991990373}
   - {fileID: 965324508}
-  - {fileID: 1740042325}
   cost: 0
   totalCost: 0
   isOpen: 0
@@ -930,7 +930,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d74eb8bf4d2ef4cb40b5ce3d2ba863, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goalNode: {fileID: 8417227}
+  goalNode: {fileID: 880452803}
   originNode: {fileID: 1345967462}
   agent: {fileID: 150319563}
   movementSpeed: 3
@@ -963,7 +963,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!81 &815388663
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1017,13 +1017,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 815388662}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 7.23, y: 15.3, z: -4.77}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: -0.7071068, w: 0}
+  m_LocalPosition: {x: 7.23, y: 15.3, z: -2.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
 --- !u!1 &843000945
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,7 +1209,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a5c52cc0753124b42901487ffb8c4f5b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1316,7 +1316,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: a5c52cc0753124b42901487ffb8c4f5b, type: 2}
+  - {fileID: 2100000, guid: c3bec0a90115b3f49abda9060bfe14d5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1739,7 +1739,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: a5c52cc0753124b42901487ffb8c4f5b, type: 2}
+  - {fileID: 2100000, guid: c3bec0a90115b3f49abda9060bfe14d5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2073,9 +2073,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   adjacents:
-  - {fileID: 1814863433}
-  - {fileID: 331182978}
   - {fileID: 1130993949}
+  - {fileID: 331182978}
+  - {fileID: 1814863433}
   cost: 0
   totalCost: 0
   isOpen: 0

@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/FSMScene.unity
+- path: Assets/Scenes/BreadthFirstSearchScene.unity
   isLoaded: 1
   isActive: 1
