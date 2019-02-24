@@ -3,29 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class PathFinder : MonoBehaviour {
+public enum TypeOfPathFinding
+{
+    BreadthFirstSearch,
+    DepthFirstSearch,
+    Dijkstra,
+    AStar
+};
 
-    public Node goalNode;
+public class PathFinder : MonoBehaviour
+{
     public Node originNode;
-    public GameObject agent;
-    public float movementSpeed;
+    public Node goalNode;
     private Node currentNode;
-    private bool goalFound;
+    public GameObject agent;
     private BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch();
     private DepthFirstSearch depthFirstSearch = new DepthFirstSearch();
     private Dijkstra dijkstra = new Dijkstra();
-    Stack<Vector3> pathToGoal = new Stack<Vector3>();
+    private AStar aStar = new AStar();
+    List<Vector3> pathToGoal = new List<Vector3>();
     List<Node> openedNodes = new List<Node>();
-    List<Node> closedNodes = new List<Node>();
+
+    public TypeOfPathFinding pathFindingType;
+    public float movementSpeed;
+    private bool goalFound;
+    private int aux;
 
     void Start ()
     {
         originNode.parent = null;
         currentNode = originNode;
         openedNodes.Add(currentNode);
-        //breadthFirstSearch.BFS(ref currentNode, ref openedNodes, ref goalNode, ref goalFound);
-        //depthFirstSearch.DFS(ref currentNode, ref openedNodes, ref goalNode, ref goalFound);
-        dijkstra.DijkstraAlgorithm(ref currentNode, ref openedNodes, ref goalNode, ref goalFound);
+
+        switch(pathFindingType)
+        {
+            case TypeOfPathFinding.BreadthFirstSearch:
+                breadthFirstSearch.BFS(ref currentNode, ref openedNodes, ref goalNode, ref goalFound);
+                break;
+            case TypeOfPathFinding.DepthFirstSearch:
+                depthFirstSearch.DFS(ref currentNode, ref openedNodes, ref goalNode, ref goalFound);
+                break;
+            case TypeOfPathFinding.Dijkstra:
+                dijkstra.DijkstraAlgorithm(ref currentNode, ref openedNodes, ref goalNode, ref goalFound);
+                break;
+            case TypeOfPathFinding.AStar:
+                aStar.AStarAlgorithm(ref currentNode, ref openedNodes, ref goalNode, ref goalFound);
+                break;
+            default:
+                break;
+        }
     }
 
 	void Update ()
@@ -33,23 +59,23 @@ public class PathFinder : MonoBehaviour {
         if(goalFound == true)
         {
             GetPath();
+            aux = pathToGoal.Count - 1;
         }
-        if(pathToGoal.Count != 0)
+        if(aux != -1)
         {
-            agent.transform.position = Vector3.MoveTowards(agent.transform.position, pathToGoal.Peek(), movementSpeed * Time.deltaTime);
-            if(agent.transform.position == pathToGoal.Peek())
+            agent.transform.position = Vector3.MoveTowards(agent.transform.position, pathToGoal[aux], movementSpeed * Time.deltaTime);
+            if(agent.transform.position == pathToGoal[aux])
             {
-                //Debug.Log(pathToGoal.Peek());
-                pathToGoal.Pop();
+                aux--;
             }
         }
 	}
 
     void GetPath()
     {
-        if(currentNode.transform.position != originNode.transform.position)
+        if(currentNode.position != originNode.position)
         {
-            pathToGoal.Push(currentNode.transform.position);
+            pathToGoal.Add(currentNode.position);
             currentNode = currentNode.parent;
         }
         else

@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Node : MonoBehaviour {
-
+public class Node
+{
+    public Vector3 position;
     public List<Node> adjacents;
-    public float cost;
-    public float totalCost;
+    public float cost = 1f;
+    public float totalCost = 0f;
     public bool isOpen;
     public bool isClosed;
-    public Node parent;
+    public Node parent = null;
 	
 	void Start () {
         isOpen = false;

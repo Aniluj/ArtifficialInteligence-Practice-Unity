@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DepthFirstSearch {
-
+public class DepthFirstSearch
+{
     public void DFS(ref Node currentNode, ref List<Node> openedNodes, ref Node goalNode, ref bool goalFound)
     {
         currentNode.isOpen = true;
         while(openedNodes.Count != 0)
         {
-            if(currentNode.transform.position == goalNode.transform.position)
+            if(currentNode.position == goalNode.position)
             {
                 goalFound = true;
                 return;
@@ -23,9 +23,11 @@ public class DepthFirstSearch {
                     currentNode.adjacents[i].parent = currentNode;
                 }
             }
+
             openedNodes.RemoveAt(0);
             currentNode.isOpen = false;
             currentNode.isClosed = true;
+
             if(openedNodes.Count != 0)
             {
                 currentNode = openedNodes[openedNodes.Count - 1];

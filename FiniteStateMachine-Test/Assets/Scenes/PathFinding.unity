@@ -161,7 +161,7 @@ MonoBehaviour:
   - {fileID: 1742678589}
   - {fileID: 1806275662}
   - {fileID: 353621391}
-  cost: 3
+  cost: 8
   totalCost: 0
   isOpen: 0
   isClosed: 0
@@ -299,7 +299,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 150319563}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 1.428565, z: -0.3000002}
+  m_LocalPosition: {x: 8.272773, y: 1.428565, z: -0.3000002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -565,7 +565,7 @@ MonoBehaviour:
   - {fileID: 1740042325}
   - {fileID: 1991990373}
   - {fileID: 965324508}
-  cost: 4
+  cost: 3
   totalCost: 0
   isOpen: 0
   isClosed: 0
@@ -930,9 +930,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d74eb8bf4d2ef4cb40b5ce3d2ba863, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goalNode: {fileID: 880452803}
-  originNode: {fileID: 1345967462}
+  originNode: {fileID: 150892759}
+  goalNode: {fileID: 1901239375}
   agent: {fileID: 150319563}
+  pathFindingType: 3
   movementSpeed: 3
 --- !u!4 &446838790
 Transform:
@@ -1271,7 +1272,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: a5c52cc0753124b42901487ffb8c4f5b, type: 2}
+  - {fileID: 2100000, guid: c3bec0a90115b3f49abda9060bfe14d5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1649,7 +1650,6 @@ MonoBehaviour:
   adjacents:
   - {fileID: 150892759}
   - {fileID: 1740042325}
-  - {fileID: 843000947}
   cost: 3
   totalCost: 0
   isOpen: 0
@@ -2351,7 +2351,7 @@ MonoBehaviour:
   - {fileID: 227217277}
   - {fileID: 1814863433}
   - {fileID: 1231579553}
-  cost: 1
+  cost: 8
   totalCost: 0
   isOpen: 0
   isClosed: 0
@@ -2458,7 +2458,7 @@ MonoBehaviour:
   - {fileID: 8417227}
   - {fileID: 1751009909}
   - {fileID: 843000947}
-  cost: 2
+  cost: 8
   totalCost: 0
   isOpen: 0
   isClosed: 0
@@ -2565,7 +2565,7 @@ MonoBehaviour:
   - {fileID: 1751009909}
   - {fileID: 843000947}
   - {fileID: 1740042325}
-  cost: 3
+  cost: 8
   totalCost: 0
   isOpen: 0
   isClosed: 0
@@ -2915,7 +2915,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a5c52cc0753124b42901487ffb8c4f5b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
