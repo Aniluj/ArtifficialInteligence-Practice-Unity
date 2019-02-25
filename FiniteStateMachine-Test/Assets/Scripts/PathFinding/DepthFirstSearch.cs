@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DepthFirstSearch
 {
+    private int count;
+
     public void DFS(ref Node currentNode, ref List<Node> openedNodes, ref Node goalNode, ref bool goalFound)
     {
         currentNode.isOpen = true;
@@ -24,7 +26,7 @@ public class DepthFirstSearch
                 }
             }
 
-            openedNodes.RemoveAt(0);
+            openedNodes.Remove(currentNode);
             currentNode.isOpen = false;
             currentNode.isClosed = true;
 
@@ -32,6 +34,8 @@ public class DepthFirstSearch
             {
                 currentNode = openedNodes[openedNodes.Count - 1];
             }
+            Debug.Log(count);
+            count++;
         }
     }
 }

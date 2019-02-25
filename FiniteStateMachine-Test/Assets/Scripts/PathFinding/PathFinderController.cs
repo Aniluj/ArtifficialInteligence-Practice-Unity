@@ -11,16 +11,24 @@ public enum TypeOfPathFinding
     AStar
 };
 
-public class PathFinder : MonoBehaviour
+public class PathFinderController : MonoBehaviour
 {
-    public Node originNode;
-    public Node goalNode;
+    Node[,] nodeGrid;
+    public Node originNode = new Node();
+    public Node goalNode = new Node();
     private Node currentNode;
+
     public GameObject agent;
+    public Transform destination;
+    private Vector3 destinationPosition = new Vector3();
+    private Vector3 agentPosition = new Vector3();
+
+    private NodesGenerator nodesGenerator;
     private BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch();
     private DepthFirstSearch depthFirstSearch = new DepthFirstSearch();
     private Dijkstra dijkstra = new Dijkstra();
     private AStar aStar = new AStar();
+
     List<Vector3> pathToGoal = new List<Vector3>();
     List<Node> openedNodes = new List<Node>();
 
@@ -29,11 +37,23 @@ public class PathFinder : MonoBehaviour
     private bool goalFound;
     private int aux;
 
+    private void Awake()
+    {
+        nodesGenerator = GetComponent<NodesGenerator>();
+    }
+
     void Start ()
     {
-        originNode.parent = null;
-        currentNode = originNode;
+        destinationPosition = destination.transform.position;
+        agentPosition = agent.transform.position;
+
+        nodesGenerator.genNodesGrid(ref nodeGrid);
+        nodesGenerator.SetNearestNode(ref nodeGrid, ref agentPosition, ref originNode);
+        nodesGenerator.SetNearestNode(ref nodeGrid, ref destinationPosition, ref goalNode);
+
+        currentNode =  originNode;
         openedNodes.Add(currentNode);
+        pathToGoal.Add(destinationPosition);
 
         switch(pathFindingType)
         {
@@ -66,6 +86,7 @@ public class PathFinder : MonoBehaviour
             agent.transform.position = Vector3.MoveTowards(agent.transform.position, pathToGoal[aux], movementSpeed * Time.deltaTime);
             if(agent.transform.position == pathToGoal[aux])
             {
+                Debug.Log(pathToGoal[aux]);
                 aux--;
             }
         }
@@ -80,6 +101,7 @@ public class PathFinder : MonoBehaviour
         }
         else
         {
+            pathToGoal.Add(agentPosition);
             goalFound = false;
         }
     }

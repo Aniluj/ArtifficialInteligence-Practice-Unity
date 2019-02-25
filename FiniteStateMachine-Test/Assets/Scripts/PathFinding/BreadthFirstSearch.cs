@@ -24,7 +24,7 @@ public class BreadthFirstSearch
                 }
             }
 
-            openedNodes.RemoveAt(0);
+            openedNodes.Remove(currentNode);
             currentNode.isOpen = false;
             currentNode.isClosed = true;
 
