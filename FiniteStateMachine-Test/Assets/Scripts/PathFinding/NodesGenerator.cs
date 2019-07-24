@@ -7,6 +7,7 @@ public class NodesGenerator : MonoBehaviour
     public int rows;
     public int columns;
     public float distanceBetweenNodes;
+    public GameObject nodePrefab;
 
     public void genNodesGrid(ref Node[,] nodeGrid)
     {
@@ -26,6 +27,7 @@ public class NodesGenerator : MonoBehaviour
                     transform.position.y,
                     transform.position.z + (j * distanceBetweenNodes)
                     );
+                Instantiate(nodePrefab, nodeGrid[i, j].position, Quaternion.identity);
             }
         }
 
