@@ -9,6 +9,13 @@ public class NodesGenerator : MonoBehaviour
     public float distanceBetweenNodes;
     public GameObject nodePrefab;
 
+    private bool CollisionInBetween(Node a, Node b)
+    {
+        bool collides = Physics.Linecast(a.position, b.position);
+        Debug.Log(collides);
+        return collides;
+    }
+
     public void genNodesGrid(ref Node[,] nodeGrid)
     {
         nodeGrid = new Node[rows, columns];
@@ -36,19 +43,19 @@ public class NodesGenerator : MonoBehaviour
         {
             for(int j = 0; j < columns; j++)
             {
-                if(j + 1 < columns)
+                if(j + 1 < columns && CollisionInBetween(nodeGrid[i, j], nodeGrid[i, j + 1]) == false)
                 {
                     nodeGrid[i, j].adjacents.Add(nodeGrid[i, j + 1]);
                 }
-                if(j - 1 > 0)
+                if(j - 1 > 0 && CollisionInBetween(nodeGrid[i, j], nodeGrid[i, j - 1]) == false)
                 {
                     nodeGrid[i, j].adjacents.Add(nodeGrid[i, j - 1]);
                 }
-                if(i + 1 < rows)
+                if(i + 1 < rows && CollisionInBetween(nodeGrid[i, j], nodeGrid[i + 1, j]) == false)
                 {
                     nodeGrid[i, j].adjacents.Add(nodeGrid[i + 1, j]);
                 }
-                if(i - 1 > 0)
+                if(i - 1 > 0 && CollisionInBetween(nodeGrid[i, j], nodeGrid[i - 1, j]) == false)
                 {
                     nodeGrid[i, j].adjacents.Add(nodeGrid[i - 1, j]);
                 }
@@ -80,8 +87,15 @@ public class NodesGenerator : MonoBehaviour
 
                 if(distanceVector.magnitude < distance)
                 {
-                    distance = distanceVector.magnitude;
-                    nearestNode = nodeGrid[i, j];
+                    //Debug.Log(" MENOR DISTANCIA I" + i + ", J" + j + " " + distanceVector.magnitude);
+                    Vector3 nodePositionXZ = new Vector3(nodeGrid[i, j].position.x, firstPosition.y, nodeGrid[i, j].position.z);
+                    bool collision = Physics.Linecast(firstPosition, nodePositionXZ);
+
+                    if(collision == false)
+                    {
+                        distance = distanceVector.magnitude;
+                        nearestNode = nodeGrid[i, j];
+                    }
                 }
             }
         }

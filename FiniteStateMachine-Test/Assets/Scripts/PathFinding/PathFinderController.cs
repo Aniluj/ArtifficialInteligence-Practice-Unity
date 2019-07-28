@@ -49,6 +49,7 @@ public class PathFinderController : MonoBehaviour
 
         nodesGenerator.genNodesGrid(ref nodeGrid);
         nodesGenerator.SetNearestNode(ref nodeGrid, ref agentPosition, ref originNode);
+        Debug.Log("ORIGIN: " + originNode.position);
         nodesGenerator.SetNearestNode(ref nodeGrid, ref destinationPosition, ref goalNode);
 
         currentNode =  originNode;
@@ -81,17 +82,16 @@ public class PathFinderController : MonoBehaviour
             GetPath();
             aux = pathToGoal.Count - 1;
         }
-        if(aux != -1)
+        else if(aux != -1)
         {
             agent.transform.position = Vector3.MoveTowards(agent.transform.position, pathToGoal[aux], movementSpeed * Time.deltaTime);
             if(agent.transform.position == pathToGoal[aux])
             {
-                Debug.Log(pathToGoal[aux]);
                 aux--;
             }
         }
 	}
-
+    
     void GetPath()
     {
         if(currentNode.position != originNode.position)
@@ -101,7 +101,7 @@ public class PathFinderController : MonoBehaviour
         }
         else
         {
-            pathToGoal.Add(agentPosition);
+            pathToGoal.Add(originNode.position);
             goalFound = false;
         }
     }
