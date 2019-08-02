@@ -12,7 +12,7 @@ public class NodesGenerator : MonoBehaviour
     private bool CollisionInBetween(Node a, Node b)
     {
         bool collides = Physics.Linecast(a.position, b.position);
-        Debug.Log(collides);
+        //Debug.Log(collides);
         return collides;
     }
 

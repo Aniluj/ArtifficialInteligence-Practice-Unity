@@ -21,4 +21,10 @@ public class Node
 	void Update () {
 		
 	}
+
+    void Reset()
+    {
+        isOpen = false;
+        isClosed = false;
+    }
 }

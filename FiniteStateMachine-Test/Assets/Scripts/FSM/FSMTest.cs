@@ -12,7 +12,9 @@ public class FSMTest : MonoBehaviour
     private int goldLeft = 0;
     private int goldCollected = 1;
     private int positionReached = 2;
-    private FSM finiteStatetMachine = new FSM(5, 3);
+    private int noGold = 3;
+    private FSM finiteStatetMachine = new FSM(5, 4);
+    private PathFinderController pathFinderController;
     private Vector3 direction;
     private Transform goldTransform;
     public Transform goldCarryingPoint;
@@ -20,12 +22,18 @@ public class FSMTest : MonoBehaviour
     public Transform mineTransform;
     public float velocity = 0;
 
+    private void Awake()
+    {
+        pathFinderController = GetComponent<PathFinderController>();
+    }
+
     void Start ()
     {
         finiteStatetMachine.SetRelation(goToTheMine, positionReached, collectGold);
         finiteStatetMachine.SetRelation(collectGold, goldCollected, goToTheHouse);
         finiteStatetMachine.SetRelation(goToTheHouse, positionReached, leaveGold);
         finiteStatetMachine.SetRelation(leaveGold, goldLeft, goToTheMine);
+        finiteStatetMachine.SetRelation(leaveGold, noGold, stayStill);
 
         direction.Set(mineTransform.position.x - transform.position.x, 0, mineTransform.position.z - transform.position.z);
     }
@@ -35,8 +43,9 @@ public class FSMTest : MonoBehaviour
         switch (finiteStatetMachine.GetState())
         {
             case goToTheMine :
-                transform.Translate((direction/direction.magnitude) * Time.deltaTime * velocity);
-                if ((this.transform.position.x >= mineTransform.position.x))
+                //transform.Translate((direction/direction.magnitude) * Time.deltaTime * velocity);
+                pathFinderController.TravelToGoal();
+                if (transform.position.x == pathFinderController.goalNode.position.x && transform.position.z == pathFinderController.goalNode.position.z)
                 {
                     finiteStatetMachine.SetEvent(positionReached);
                 }
@@ -49,26 +58,30 @@ public class FSMTest : MonoBehaviour
                     finiteStatetMachine.SetEvent(goldCollected);
                     direction.Set(houseTransform.position.x - transform.position.x, 0, houseTransform.position.z - transform.position.z);
                 }
-                else
-                {
-                    finiteStatetMachine.SetRelation(collectGold, goldCollected, stayStill);
-                    finiteStatetMachine.SetEvent(goldCollected);
-                }
                 break;
             case goToTheHouse:
-                transform.Translate((direction / direction.magnitude) * Time.deltaTime * velocity);
-                if (transform.position.x <= houseTransform.position.x)
+                //transform.Translate((direction / direction.magnitude) * Time.deltaTime * velocity);
+                pathFinderController.TravelToOrigin();
+                if (transform.position.x == pathFinderController.originNode.position.x && transform.position.z == pathFinderController.originNode.position.z)
                 {
                     finiteStatetMachine.SetEvent(positionReached);
                 }
                 break;
             case leaveGold:
                 transform.Find("Gold").transform.SetParent(houseTransform);
-                finiteStatetMachine.SetEvent(goldLeft);
+                if(mineTransform.childCount != 0)
+                {
+                    finiteStatetMachine.SetEvent(goldLeft);
+                }
+                else
+                {
+                    finiteStatetMachine.SetEvent(noGold);
+                }
                 direction.Set(mineTransform.position.x - transform.position.x, 0, mineTransform.position.z - transform.position.z);
                 break;
             case stayStill:
-                velocity = 0;
+                //velocity = 0;
+                pathFinderController.TravelToOrigin();
                 break;
         }
 	}

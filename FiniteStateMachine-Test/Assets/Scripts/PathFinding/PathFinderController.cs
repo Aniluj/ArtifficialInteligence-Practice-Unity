@@ -23,7 +23,7 @@ public class PathFinderController : MonoBehaviour
     private Vector3 destinationPosition = new Vector3();
     private Vector3 agentPosition = new Vector3();
 
-    private NodesGenerator nodesGenerator;
+    public NodesGenerator nodesGenerator;
     private BreadthFirstSearch breadthFirstSearch = new BreadthFirstSearch();
     private DepthFirstSearch depthFirstSearch = new DepthFirstSearch();
     private Dijkstra dijkstra = new Dijkstra();
@@ -35,11 +35,12 @@ public class PathFinderController : MonoBehaviour
     public TypeOfPathFinding pathFindingType;
     public float movementSpeed;
     private bool goalFound;
-    private int aux;
+    private int numbOfPositionsToReach;
 
     private void Awake()
     {
-        nodesGenerator = GetComponent<NodesGenerator>();
+        //nodesGenerator = GetComponent<NodesGenerator>();
+        nodesGenerator = GameObject.FindObjectOfType<NodesGenerator>().GetComponent<NodesGenerator>();
     }
 
     void Start ()
@@ -77,31 +78,61 @@ public class PathFinderController : MonoBehaviour
 
 	void Update ()
     {
+
+	}
+
+    public void TravelToGoal()
+    {
         if(goalFound == true)
         {
             GetPath();
-            aux = pathToGoal.Count - 1;
+            numbOfPositionsToReach = pathToGoal.Count - 1;
         }
-        else if(aux != -1)
+        else if(numbOfPositionsToReach != -1)
         {
-            agent.transform.position = Vector3.MoveTowards(agent.transform.position, pathToGoal[aux], movementSpeed * Time.deltaTime);
-            if(agent.transform.position == pathToGoal[aux])
+            agent.transform.position = Vector3.MoveTowards(agent.transform.position, pathToGoal[numbOfPositionsToReach], movementSpeed * Time.deltaTime);
+            if(agent.transform.position == pathToGoal[numbOfPositionsToReach])
             {
-                aux--;
+                numbOfPositionsToReach--;
             }
         }
-	}
+    }
+
+    public void TravelToOrigin()
+    {
+        if(goalFound == false)
+        {
+            goalFound = true;
+            numbOfPositionsToReach = 0;
+            Debug.Log("Entra");
+        }
+        else if(numbOfPositionsToReach != pathToGoal.Count)
+        {
+            agent.transform.position = Vector3.MoveTowards(agent.transform.position, pathToGoal[numbOfPositionsToReach], movementSpeed * Time.deltaTime);
+            if(agent.transform.position == pathToGoal[numbOfPositionsToReach])
+            {
+                numbOfPositionsToReach++;
+            }
+        }
+    }
     
     void GetPath()
     {
-        if(currentNode.position != originNode.position)
+        if(pathToGoal[0] != originNode.position)
         {
-            pathToGoal.Add(currentNode.position);
-            currentNode = currentNode.parent;
+            if(currentNode.position != originNode.position)
+            {
+                pathToGoal.Add(currentNode.position);
+                currentNode = currentNode.parent;
+            }
+            else
+            {
+                pathToGoal.Add(originNode.position);
+                goalFound = false;
+            }
         }
         else
         {
-            pathToGoal.Add(originNode.position);
             goalFound = false;
         }
     }
